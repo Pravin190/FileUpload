@@ -1,31 +1,31 @@
 
-//app create
+//app(server) created
 const express = require("express");
 const app = express();
 
-//PORt find krna h 
+//dotenv => which is used to we can get PORT number from .env file and put in the process.env object.
 require("dotenv").config();
 const PORT = process.env.PORT || 3000;
 
-//middleware add krne h 
-
+//here we used .use middleware which is used to we can fetch data as json format
 app.use(express.json());
- // isse file ko server mai add kr sakte hai.
+
+ // here we used FileUpload, which is used to we can upload the file on server.
 const FileUpload = require("express-fileupload");      
 app.use(FileUpload({
     useTempFiles : true,
     tempFileDir : '/tmp/'
 }));
 
-//db se connect krnah 
+//Establish database connection
 const db = require("./config/database");
 db.connect();
 
-//cloud se connect krna h 
+//here we used cloudinary, which is used for upload the file on server then upload the file on media server after that file deleted automatically from the sever.
 const cloudinary = require("./config/cloudinary");
 cloudinary.cloudinaryConnect();
 
-//api route mount krna h 
+//here we mounting the route 
 const Upload = require("./routes/FileUpload");
 app.use('/api/v1/upload', Upload);
 
